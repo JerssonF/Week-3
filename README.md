@@ -28,7 +28,7 @@ Funcionalidades críticas sin las cuales el sistema no cumple su propósito oper
 
 #### 2. Gestión de Inventario
 
-- RF-06 Registro completo de medicamentos (código, nombre, principio activo, lote, vencimiento, sede, stock mínimo, estado).
+- RF-06 Registro completo de medicamentos (código, nombre, principio activo, lote, vencimiento, stock mínimo, estado).
 - RF-07 Actualización de productos.
 - RF-08 Eliminación lógica.
 - RF-09 Descuento automático de stock.
@@ -56,7 +56,7 @@ Funcionalidades críticas sin las cuales el sistema no cumple su propósito oper
 - RF-17 Reflejar cambios en tiempo real.
 - RNF-05 Prevención de inconsistencias simultáneas.
 - RNF-07 Manejo de conflictos de edición.
-- RNF-30 Límite configurable de sesiones por sede.
+- RNF-30 Límite configurable de sesiones.
 
 ---
 
@@ -70,8 +70,6 @@ Funcionalidades críticas sin las cuales el sistema no cumple su propósito oper
 ---
 
 ### SHOULD HAVE (Importante – Versión 1.1)
-
-Mejoras relevantes para rendimiento y confiabilidad.
 
 #### 1. Rendimiento
 
@@ -93,7 +91,7 @@ Mejoras relevantes para rendimiento y confiabilidad.
 
 - RNF-08 Disponibilidad mínima 99% mensual.
 - RNF-10 Modo solo lectura ante fallo de red.
-- RNF-18 Registro de nodo en bitácora.
+- RNF-18 Registro de eventos en bitácora.
 - RNF-19 Bitácora solo lectura para no administradores.
 
 ---
@@ -146,14 +144,13 @@ Mejoras relevantes para rendimiento y confiabilidad.
 
 - No permite campos obligatorios vacíos.
 - No permite duplicar código + lote.
-- Asignación obligatoria de sede.
 - Persistencia correcta en base de datos.
 
 ---
 
 #### RF-09 – Descuento de Stock
 
-- Reducción automática tras venta confirmada.
+- Reducción automática tras confirmación del movimiento.
 - No permite stock negativo.
 - Registro en historial con usuario y fecha.
 
@@ -163,13 +160,13 @@ Mejoras relevantes para rendimiento y confiabilidad.
 
 - Genera alertas configurables (30 y 15 días).
 - Bloquea productos vencidos.
-- No permite su venta.
+- No permite su registro en movimientos posteriores.
 
 ---
 
 #### RF-14 – Historial de Movimientos
 
-- Registra usuario, fecha/hora, tipo, sede y cantidad.
+- Registra usuario, fecha/hora, tipo y cantidad.
 - No permite modificación posterior.
 - Permite filtrado por fecha y producto.
 
@@ -204,7 +201,7 @@ La MVP garantiza control, trazabilidad, integridad y funcionamiento multiusuario
 
 | Necesidad del Negocio | RF Asociados | RNF Asociados |
 |------------------------|--------------|---------------|
-| Control centralizado | RF-06, RF-11, RF-15 | RNF-14, RNF-29 |
+| Control del inventario | RF-06, RF-11, RF-15 | RNF-14, RNF-29 |
 | Gestión operativa interna | RF-12, RF-13, RF-09 | RNF-11, RNF-13 |
 | Control por lote y vencimiento | RF-06, RF-10 | RNF-12, RNF-06 |
 | Actualización en tiempo real | RF-17 | RNF-05, RNF-14 |
@@ -216,7 +213,7 @@ La MVP garantiza control, trazabilidad, integridad y funcionamiento multiusuario
 
 ---
 
-### ¿Porqué Moscow?
+### ¿Por qué MoSCoW?
 
 La aplicación de MoSCoW permite:
 
@@ -225,4 +222,3 @@ La aplicación de MoSCoW permite:
 - Establecer entregas incrementales.
 - Garantizar alineación entre necesidades del negocio y requerimientos técnicos.
 - Reducir riesgos en la primera versión del sistema.
-
