@@ -4,221 +4,208 @@
 Proyecto: FarmaExpres  
 Sistema de Gestión de Inventario Farmacéutico
 
+Este documento define los requerimientos funcionales y no funcionales de la **Versión 1.0 (MVP)** del sistema FarmaExpres.<br>
 La priorización se realiza con base en las necesidades del negocio, requerimientos funcionales (RF) y no funcionales (RNF) previamente definidos.
 
----
 
-### MUST HAVE (Obligatorio – Versión 1.0)
+El objetivo es establecer una base operativa mínima que garantice:
 
-Funcionalidades críticas sin las cuales el sistema no cumple su propósito operativo.
-
-#### 1. Seguridad y Gestión de Usuarios
-
-- RF-01 Registro de usuarios con roles.
-- RF-02 Autenticación con credenciales únicas.
-- RF-03 Recuperación de contraseña.
-- RF-05 Bitácora de accesos y acciones críticas.
-- RNF-15 Comunicación segura HTTPS.
-- RNF-16 Control de acceso por roles.
-- RNF-17 Cierre automático por inactividad.
-- RNF-31 Almacenamiento cifrado de contraseñas.
-- RNF-32 Validación de datos obligatorios.
+- Control de inventario
+- Seguridad
+- Trazabilidad
+- Operación multiusuario estable
 
 ---
 
-#### 2. Gestión de Inventario
+## 1 Alcance 
 
-- RF-06 Registro completo de medicamentos (código, nombre, principio activo, lote, vencimiento, stock mínimo, estado).
-- RF-07 Actualización de productos.
-- RF-08 Eliminación lógica.
-- RF-09 Descuento automático de stock.
-- RF-10 Alertas configurables de vencimiento y bloqueo automático.
-- RF-11 Consulta de inventario en tiempo real.
-- RNF-12 Prevención de duplicados código + lote.
-- RNF-06 Prevención de stock negativo.
+La versión 1.0 incluye: 
 
----
+- Gestión de usuarios y control de acceso
+- Registro y control de medicamentos
+- Gestión de entradas y salidas
+- Historial inmutable de movimientos
+- Alertas de vencimiento
+- Soporte multiusuario con control de concurrencia
+- Reportes básicos operativos
 
-#### 3. Movimientos y Transacciones
+No se incluyen:
 
-- RF-12 Registro de entradas.
-- RF-13 Registro de salidas.
-- RF-14 Historial completo de movimientos.
-- RNF-11 Atomicidad (todo o nada).
-- RNF-13 Cancelación automática ante error.
-- RNF-29 Sincronización de fecha y hora del servidor.
+- Integraciones externas
+- Arquitectura distribuida avanzada
+- Aplicación móvil
+- Inteligencia predictiva
 
 ---
 
-#### 4. Concurrencia
+# 2. Descripción General del Sistema
 
-- RF-16 Acceso concurrente multiusuario.
-- RF-17 Reflejar cambios en tiempo real.
-- RNF-05 Prevención de inconsistencias simultáneas.
-- RNF-07 Manejo de conflictos de edición.
-- RNF-30 Límite configurable de sesiones.
+FarmaExpres es un sistema web orientado a la gestión de inventario farmacéutico que permite:
 
----
-
-#### 5. Reportes Básicos
-
-- RF-15 Inventario actual.
-- RF-15 Productos próximos a vencer.
-- RF-15 Productos agotados.
-- RF-15 Historial de movimientos.
+- Controlar medicamentos y fecha de vencimiento
+- Gestionar movimientos de entrada y salida
+- Evitar inconsistencias por concurrencia
+- Mantener trazabilidad completa de operaciones
+- Garantizar seguridad de la información
 
 ---
 
-### SHOULD HAVE (Importante – Versión 1.1)
-
-#### 1. Rendimiento
-
-- RNF-01 Soporte mínimo de 15 usuarios concurrentes.
-- RNF-02 Consulta ≤ 15 segundos.
-- RNF-03 Registro ≤ 15 segundos.
-- RNF-04 Reportes ≤ 30 segundos.
+# 3. Requerimientos Funcionales (RF) 
 
 ---
 
-#### 2. Respaldo y Recuperación
+## 3.1 Seguridad y Gestión de Usuarios
 
-- RNF-22 Backup automático diario.
-- RNF-23 Restauración en máximo 1 día.
-
----
-
-#### 3. Disponibilidad y Auditoría Extendida
-
-- RNF-08 Disponibilidad mínima 99% mensual.
-- RNF-10 Modo solo lectura ante fallo de red.
-- RNF-18 Registro de eventos en bitácora.
-- RNF-19 Bitácora solo lectura para no administradores.
+- **RF-01** Registro de usuarios con asignación de roles.
+- **RF-02** Autenticación mediante credenciales únicas.
+- **RF-03** Recuperación de contraseña.
+- **RF-05** Registro en bitácora de accesos y acciones críticas.
 
 ---
 
-### COULD HAVE (Deseable – Futuras Iteraciones)
+## 3.2 Gestión de Inventario
 
-#### 1. Escalabilidad
+- **RF-06** Registro de medicamentos con los siguientes campos obligatorios:
+  - Código único
+  - Nombre
+  - Precio unitario
+  - Fecha de vencimiento
+  - Stock
+  - Estado
 
-- RNF-20 Segundo nodo sin modificar lógica principal.
-- RNF-21 Balanceo básico de carga.
-
----
-
-#### 2. Portabilidad
-
-- RNF-28 Despliegue en distintos entornos.
-
----
-
-#### 3. Usabilidad y Mantenibilidad
-
-- RNF-24 Capacitación en menos de 4 horas.
-- RNF-25 Compatibilidad con navegadores modernos.
-- RNF-26 Documentación técnica completa.
-- RNF-27 Arquitectura por capas.
+- **RF-07** Actualización de información de medicamentos.
+- **RF-08** Eliminación lógica de medicamentos.
+- **RF-09** Generación de alertas configurables de vencimiento y bloqueo automático de productos vencidos.
+- **RF-10** Consulta de inventario en tiempo real.
 
 ---
 
-### WON’T HAVE (Fuera del Alcance Actual)
+## 3.3 Movimientos de Inventario
 
-- Arquitectura empresarial distribuida completa.
-- Integraciones externas (facturación electrónica).
-- Aplicación móvil.
-- Inteligencia predictiva.
-- Infraestructura cloud avanzada.
+- **RF-11** Registro de entradas de inventario.
+- **RF-12** Registro de salidas con descuento automático de stock.
+- **RF-13** Historial completo e inmutable de movimientos.
 
 ---
 
-### Criterios de Aceptación Medibles (RF Críticos)
+## 3.4 Concurrencia
 
-#### RF-02 – Autenticación
-
-- Acceso permitido solo con credenciales válidas.
-- Registro de intentos fallidos.
-- Cierre automático tras 20 minutos.
+- **RF-16** Soporte de acceso concurrente multiusuario.
+- **RF-17** Actualización de cambios en otros clientes en tiempo real (≤ 15 segundos).
 
 ---
 
-#### RF-06 – Registro de Medicamentos
+## 3.5 Reportes Básicos
+
+- **RF-14** Reporte de inventario actual.
+- **RF-15** Reporte de productos próximos a vencer.
+- **RF-18** Reporte de productos agotados.
+- **RF-19** Reporte de historial de movimientos.
+
+---
+
+# 4. Requerimientos No Funcionales (RNF)
+
+---
+
+## 4.1 Seguridad
+
+- **RNF-15** Comunicación segura mediante HTTPS.
+- **RNF-16** Control de acceso basado en roles.
+- **RNF-31** Almacenamiento cifrado de contraseñas.
+- **RNF-32** Validación obligatoria de campos.
+
+---
+
+## 4.2 Integridad y Consistencia
+
+- **RNF-06** Prevención de stock negativo.
+- **RNF-12** Prevención de duplicidad de código.
+- **RNF-11** Atomicidad en transacciones (todo o nada).
+- **RNF-13** Rollback automático ante error.
+- **RNF-29** Sincronización automática con fecha y hora del servidor.
+
+---
+
+## 4.3 Concurrencia
+
+- **RNF-05** Prevención de inconsistencias por acceso simultáneo.
+- **RNF-07** Manejo de conflictos de edición.
+- **RNF-30** Límite configurable de sesiones activas.
+
+---
+
+# 5. Criterios de Aceptación
+
+---
+
+## 5.1 RF-02 – Autenticación
+
+- Permite acceso únicamente con credenciales válidas.
+
+---
+
+## 5.2 RF-06 – Registro de Medicamentos
 
 - No permite campos obligatorios vacíos.
-- No permite duplicar código + lote.
-- Persistencia correcta en base de datos.
+- No permite códigos duplicados.
+- Persiste correctamente en base de datos.
 
 ---
 
-#### RF-09 – Descuento de Stock
+## 5.3 RF-09 – Alertas de Vencimiento
 
-- Reducción automática tras confirmación del movimiento.
+- Genera alerta configurable ( 15 días antes).
+- Bloquea automáticamente productos vencidos.
+- Impide su uso en movimientos posteriores.
+
+---
+
+## 5.4 RF-12 – Salidas de Inventario
+
+- Reduce automáticamente el stock al confirmar la salida.
 - No permite stock negativo.
-- Registro en historial con usuario y fecha.
+- Registra usuario, fecha y tipo de movimiento.
 
 ---
 
-#### RF-10 – Alertas de Vencimiento
+## 5.5 RF-13 – Historial
 
-- Genera alertas configurables (30 y 15 días).
-- Bloquea productos vencidos.
-- No permite su registro en movimientos posteriores.
-
----
-
-#### RF-14 – Historial de Movimientos
-
-- Registra usuario, fecha/hora, tipo y cantidad.
+- Registra usuario, fecha/hora y tipo.
 - No permite modificación posterior.
-- Permite filtrado por fecha y producto.
 
 ---
 
-#### RF-16 / RF-17 – Concurrencia
+## 5.6 Concurrencia (RF-16 / RF-17)
 
 - No permite inconsistencias simultáneas.
 - Refleja cambios en otros clientes ≤ 15 segundos.
-- Aplica transacciones completas o rollback.
+- Aplica transacciones completas o rollback ante error.
 
 ---
 
-### Definición de la Versión Mínima Viable (MVP)
+# 6. Matriz de Trazabilidad
 
-La MVP incluye exclusivamente los elementos clasificados como MUST HAVE:
-
-1. Seguridad y autenticación.
-2. Registro y control de medicamentos por lote y vencimiento.
-3. Entradas y salidas con descuento automático.
-4. Historial completo de movimientos.
-5. Alertas de vencimiento.
-6. Concurrencia controlada.
-7. Reportes básicos.
-8. Validaciones e integridad transaccional.
-
-La MVP garantiza control, trazabilidad, integridad y funcionamiento multiusuario estable.
+| Necesidad del Negocio | RF | RNF |
+|------------------------|----|-----|
+| Control de inventario | RF-06, RF-10, RF-14 | RNF-06, RNF-12 |
+| Gestión operativa | RF-11, RF-12 | RNF-11, RNF-13 |
+| Control por lote y vencimiento | RF-06, RF-09 | RNF-06 |
+| Concurrencia segura | RF-16, RF-17 | RNF-05, RNF-07 |
+| Seguridad y acceso | RF-01, RF-02 | RNF-15, RNF-16, RNF-31 |
+| Trazabilidad | RF-05, RF-13 | RNF-29 |
 
 ---
 
-### Matriz de Trazabilidad (Necesidades ↔ RF ↔ RNF)
+# 7. Definición Formal de la MVP
 
-| Necesidad del Negocio | RF Asociados | RNF Asociados |
-|------------------------|--------------|---------------|
-| Control del inventario | RF-06, RF-11, RF-15 | RNF-14, RNF-29 |
-| Gestión operativa interna | RF-12, RF-13, RF-09 | RNF-11, RNF-13 |
-| Control por lote y vencimiento | RF-06, RF-10 | RNF-12, RNF-06 |
-| Actualización en tiempo real | RF-17 | RNF-05, RNF-14 |
-| Concurrencia segura | RF-16 | RNF-05, RNF-07 |
-| Trazabilidad y auditoría | RF-05, RF-14 | RNF-18, RNF-19 |
-| Seguridad y control de acceso | RF-01, RF-02 | RNF-15, RNF-16, RNF-31 |
-| Soporte para decisiones | RF-15 | RNF-04 |
-| Reducción de errores operativos | RF-09, RF-10 | RNF-32 |
+La Versión 1.0 garantiza:
 
----
+- Control total del inventario farmacéutico.
+- Prevención de errores críticos (duplicados y stock negativo).
+- Seguridad en autenticación y control de acceso.
+- Registro inmutable de movimientos.
+- Alertas automáticas de vencimiento.
 
-### ¿Por qué MoSCoW?
 
-La aplicación de MoSCoW permite:
 
-- Priorizar el núcleo crítico del sistema.
-- Definir claramente la MVP.
-- Establecer entregas incrementales.
-- Garantizar alineación entre necesidades del negocio y requerimientos técnicos.
-- Reducir riesgos en la primera versión del sistema.
